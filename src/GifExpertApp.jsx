@@ -1,43 +1,37 @@
-import { useState } from "react";
-import { AddCategory } from "./components/AddCategory";
-import { GifGrid } from "./components/GifGrid";
+import { useState } from "react"
+import { AddCategory } from "./components/AddCategory"
+import { GifGrid } from "./components/GifGrid"
 
-
-
+  
 export const GifExpertApp = () => {
 
+  const [categories, setcategories] = useState([])
+
+  const addNewCategory = (newCategory) =>{
+    setcategories([newCategory,...categories])
+  }
+
+
+  return (
+    <>
     
-    const [categories, setCategories] = useState(['Dragon Ball'])
-    
-
-    const onAddCategory = (newCategory) => {
-      if(categories.includes(newCategory)) return; 
-      setCategories([newCategory,...categories,])
-    }
+      <h1>GifExpertApp</h1>
 
 
-    return (
-      <>
-          <h1>GifExpertApp</h1>
+      <AddCategory
+        onNewCategory = {addNewCategory}
+      />
 
-          <AddCategory 
-            onNewCategory={(event) => onAddCategory(event)}
+      {
+        categories.map(category => (
+          <GifGrid
+            key={category}
+            category={category}
           />
-
-
-      
-          {categories.map(category =>
-              (
-                  <GifGrid 
-                    key = {category} 
-                    category = {category}
-                  />
-              ))
-          }
-
-          
-         
-
-      </>
-    )
+        ))
+      }
+    
+    
+    </>
+  )
 }
